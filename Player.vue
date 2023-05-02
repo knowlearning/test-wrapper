@@ -8,7 +8,7 @@ const props = defineProps({
   denominator: Number,
 })
 
-const color = ref('chartreuse')
+const color = ref('pink')
 const partitions = ref(new Array(props.denominator).fill('white'))
 const selected = computed(() => partitions.value.filter(c => c !== 'white').length)
 const correct = ref(null)
