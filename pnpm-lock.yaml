@@ -2,8 +2,8 @@ lockfileVersion: '6.0'
 
 dependencies:
   '@knowlearning/agents':
-    specifier: ^0.1.4
-    version: 0.1.4
+    specifier: ^0.1.5
+    version: 0.1.5
   canvas-confetti:
     specifier: ^1.6.0
     version: 1.6.0
@@ -251,8 +251,8 @@ packages:
     dev: true
     optional: true
 
-  /@knowlearning/agents@0.1.4:
-    resolution: {integrity: sha512-uFKtuEw9WReDL/p8V22YISwVNEdnha40xPNmCyOsShrwoeNNePNiyTFZQEHm7SQqJXsWaZ8R/eT3HWxUDgrWNw==}
+  /@knowlearning/agents@0.1.5:
+    resolution: {integrity: sha512-Gl20bMOQVALY43yOUXSUxhOQJSv7ZLH6w/mdNNmj0zEB6kVbY5Mm03gypZTqyiIIdXw2KULyDLX5IxQoyb4ZQw==}
     dependencies:
       fast-json-patch: 3.1.1
       node-fetch: 3.3.1

@@ -1,6 +1,7 @@
 import Editor from './Editor.vue'
 import Player from './Player.vue'
-import { BrowserAgent, vuePersistentComponent } from '@knowlearning/agents'
+import { BrowserAgent } from '@knowlearning/agents'
+import vuePersistentComponent from './quick-hack.js'
 
 window.Agent = BrowserAgent()
 
