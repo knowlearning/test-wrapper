@@ -57,4 +57,5 @@ export default async function (module, props) {
   document.body.innerHTML = ''
   const app = createApp(component, props)
   app.mount(document.body)
+  debugger
 }
