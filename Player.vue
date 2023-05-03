@@ -31,8 +31,9 @@
       Oops too {{ selected > numerator ? 'many' : 'few' }}.
     </div>
     <div id="button-bar">
-      <button @click="view = 'instructions'">instructions</button>
+      <button v-if="!correct" @click="view = 'instructions'">instructions</button>
       <button v-if="correct === null" @click="submit">I colored {{ numerator }} / {{ denominator }} of the {{ shape }}</button>
+      <button v-else-if="correct === false" @click="correct = null">Keep Trying!</button>
     </div>
   </div>
 </template>
