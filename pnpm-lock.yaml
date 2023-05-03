@@ -4,6 +4,9 @@ dependencies:
   '@knowlearning/agents':
     specifier: ^0.1.7
     version: 0.1.7
+  '@knowlearning/fill-text':
+    specifier: ^1.0.0
+    version: 1.0.0
   canvas-confetti:
     specifier: ^1.6.0
     version: 1.6.0
@@ -257,6 +260,10 @@ packages:
       fast-json-patch: 3.1.1
       node-fetch: 3.3.1
       uuid: 8.3.2
+    dev: false
+
+  /@knowlearning/fill-text@1.0.0:
+    resolution: {integrity: sha512-bVHM09MXRC0EbmdBRQmftovVm+6FyU1EJrfj7Sm2KXbz2iji7c7QBknx8mOe23gI/gWYeOVNZiEqQeRkjFyrQw==}
     dev: false
 
   /@vitejs/plugin-basic-ssl@1.0.1(vite@4.3.3):

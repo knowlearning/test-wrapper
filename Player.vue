@@ -1,20 +1,48 @@
 <template>
-  <span>Color in {{ numerator }} / {{ denominator }} of the shape.</span>
-  <FractionPolygon
-    :partitions="partitions"
-    @select="index => {
-      partitions[index] = partitions[index] === 'white' ? color : 'white'
-      correct = null
-    }"
-  />
-  <span v-if="correct">Correct!</span>
-  <span v-else-if="correct === false">That is {{ selected }} / {{ denominator }}. Keep trying!</span>
-  <button v-else @click="submit">done</button>
+  <div
+    id="instructions-page"
+    v-if="view === 'instructions'"
+  >
+    <div
+      id="instructions-text"
+      :ref="fillText"
+    >
+      Color {{ numerator }} / {{ denominator }} of the {{ shape }}.
+    </div>
+    <div>
+      <button @click="view = 'workspace'">Okay!</button>
+    </div>
+  </div>
+  <div v-else-if="view === 'workspace'" id="workspace">
+    <div id="workspace-visual">
+      <FractionPolygon
+        :partitions="partitions"
+        :exploded="showFractionVisual"
+        @select="index => {
+          partitions[index] = partitions[index] === 'white' ? color : 'white'
+          correct = null
+        }"
+      />
+    </div>
+    <div v-if="correct===true" id="feedback-box" :ref="fillText">
+      Nice work!
+    </div>
+    <div v-else-if="correct===false" id="feedback-box" :ref="fillText">
+      Oops too {{ selected > numerator ? 'many' : 'few' }}.
+    </div>
+    <div id="button-bar">
+      <button @click="view = 'instructions'">instructions</button>
+      <button v-if="correct === null" @click="submit">I colored {{ numerator }} / {{ denominator }} of the {{ shape }}</button>
+    </div>
+  </div>
 </template>
 
 <script>
 import FractionPolygon from './FractionPolygon.vue'
 import confetti from 'canvas-confetti'
+import fillText from '@knowlearning/fill-text'
+
+const shapes = [null, null, null, 'triangle', 'square', 'pentagon', 'hexagon', 'heptagon', 'octagon']
 
 export default {
   components: { FractionPolygon },
@@ -30,6 +58,7 @@ export default {
   },
   data() {
     return {
+      view: 'instructions',
       color: 'pink',
       partitions: new Array(this.denominator).fill('white'),
       correct: null
@@ -38,9 +67,18 @@ export default {
   computed: {
     selected() {
       return this.partitions.filter(x => x !== 'white').length
+    },
+    shape() {
+      return shapes[this.denominator] || 'shape'
+    },
+    showFractionVisual() {
+      return this.correct !== null
     }
   },
   methods: {
+    fillText(el) {
+      if (el) setTimeout(() => fillText(el, 'center'))
+    },
     submit() {
       if (this.selected === this.numerator) {
         this.correct = true
@@ -58,4 +96,31 @@ export default {
 </script>
 
 <style scoped>
+
+#instructions-page,
+#workspace {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  justify-content: space-around;
+}
+
+#instructions-text {
+  flex-grow: 1;
+}
+
+#workspace-visual {
+  flex-grow: 1;
+  position: relative;
+  max-height: 80vh;
+}
+
+#feedback-box {
+  height: 33vh;
+  overflow: hidden;
+}
+
 </style>

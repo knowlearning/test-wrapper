@@ -1,5 +1,6 @@
 import Editor from './Editor.vue'
 import Player from './Player.vue'
+import './main.css'
 import { BrowserAgent, vuePersistentComponent } from '@knowlearning/agents'
 
 window.Agent = BrowserAgent()
