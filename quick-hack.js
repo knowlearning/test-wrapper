@@ -26,10 +26,11 @@ export default async function (module, props) {
     else if (component.setup) {
       const origSetupFn = component.setup
       const isReactiveRef = r => r && r.__v_isRef
-      component.setup = function setupProxy(a, b) { // need to specifically add this here, otherwise second argument not passed in arguments array (probably because of webpack optimization...)
+      component.setup = (a, b) => { // need to specifically add this here, otherwise second argument not passed in arguments array (probably because of webpack optimization...)
         const refs = origSetupFn(a, b)
 
-        console.log('refs', refs)
+        console.log('refs', refs, component)
+        debugger
 
         Object
           .entries(state)
