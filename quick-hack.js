@@ -28,24 +28,27 @@ export default async function (module, props) {
       const isReactiveRef = r => r && r.__v_isRef
       component.setup = function setupProxy(a, b) { // need to specifically add this here, otherwise second argument not passed in arguments array (probably because of webpack optimization...)
         let refs = origSetupFn.call(this, a, b)
+        function doIt() {
+          Object
+            .entries(state)
+            .filter(([k]) => isReactiveRef(refs[k]))
+            .forEach(([k, v]) => refs[k].value = v)
 
-        Object
-          .entries(state)
-          .filter(([k]) => isReactiveRef(refs[k]))
-          .forEach(([k, v]) => refs[k].value = v)
-
-        Object
-          .entries(refs)
-          .filter(([_,r]) => isReactiveRef(r) && isScopeSerializable(r.value))
-          .forEach(([key, ref]) => {
-            watchEffect(() => {
-              if (state[key] !== ref.value) {
-                state[key] = ref.value
-              }
+          Object
+            .entries(refs)
+            .filter(([_,r]) => isReactiveRef(r) && isScopeSerializable(r.value))
+            .forEach(([key, ref]) => {
+              watchEffect(() => {
+                if (state[key] !== ref.value) {
+                  state[key] = ref.value
+                }
+              })
             })
-          })
 
-        return refs
+          return refs
+        }
+        if (typeof refs === 'function') return doIt
+        else return doIt()
       }
     }
   }
