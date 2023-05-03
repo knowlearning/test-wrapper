@@ -27,9 +27,9 @@ export default async function (module, props) {
       const origSetupFn = component.setup
       const isReactiveRef = r => r && r.__v_isRef
       component.setup = function setupProxy(a, b) { // need to specifically add this here, otherwise second argument not passed in arguments array (probably because of webpack optimization...)
-        const refs = origSetupFn.call(this, a, b)
+        const refs = origSetupFn(a, b)
 
-        console.log(refs)
+        console.log('refs', refs)
 
         Object
           .entries(state)
@@ -55,6 +55,5 @@ export default async function (module, props) {
 
   document.body.innerHTML = ''
   const app = createApp(component, props)
-  console.log(app)
   app.mount(document.body)
 }
