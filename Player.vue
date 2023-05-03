@@ -1,32 +1,3 @@
-<script setup>
-import { ref, computed } from 'vue'
-import FractionPolygon from './FractionPolygon.vue'
-import confetti from 'canvas-confetti'
-
-const props = defineProps({
-  numerator: Number,
-  denominator: Number,
-})
-
-const color = ref('pink')
-const partitions = ref(new Array(props.denominator).fill('white'))
-const selected = computed(() => partitions.value.filter(c => c !== 'white').length)
-const correct = ref(null)
-
-function submit() {
-  if (selected.value === props.numerator) {
-    correct.value = true
-    confetti({
-      particleCount: 200,
-      spread: 70,
-      origin: { y: 1 }
-    })
-  }
-  else correct.value = false
-}
-
-</script>
-
 <template>
   <span>Color in {{ numerator }} / {{ denominator }} of the shape.</span>
   <FractionPolygon
@@ -40,6 +11,51 @@ function submit() {
   <span v-else-if="correct === false">That is {{ selected }} / {{ denominator }}. Keep trying!</span>
   <button v-else @click="submit">done</button>
 </template>
+
+<script>
+import FractionPolygon from './FractionPolygon.vue'
+import confetti from 'canvas-confetti'
+
+export default {
+  components: { FractionPolygon },
+  props: {
+    numerator: {
+      type: Number,
+      required: true
+    },
+    denominator: {
+      type: Number,
+      required: true
+    }
+  },
+  data() {
+    return {
+      color: 'pink',
+      partitions: new Array(this.denominator).fill('white'),
+      correct: null
+    }
+  },
+  computed: {
+    selected() {
+      return this.partitions.filter(x => x !== 'white').length
+    }
+  },
+  methods: {
+    submit() {
+      if (this.selected === this.numerator) {
+        this.correct = true
+        confetti({
+          particleCount: 200,
+          spread: 70,
+          origin: { y: 1 }
+        })
+      }
+      else this.correct = false
+    }
+  }
+}
+
+</script>
 
 <style scoped>
 </style>
