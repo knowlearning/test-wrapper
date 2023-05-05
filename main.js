@@ -1,20 +1,14 @@
-import Editor from './Editor.vue'
-import Player from './Player.vue'
-import './main.css'
+import Wrapper from './wrapper.vue'
 import { BrowserAgent, vuePersistentComponent } from '@knowlearning/agents'
 
 window.Agent = BrowserAgent()
-
-const url = new URL(window.location.href)
-
-const params = url.searchParams
-if (params.get('numerator')) {
-  const props = {
-    numerator: parseInt(params.get('numerator')),
-    denominator: parseInt(params.get('denominator'))
-  }
-  vuePersistentComponent(Player, props)
+const props = {
+  items: [
+    'ef08a8e0-ead1-11ed-9243-012070fe7fad',
+    'https://fill-the-fraction.netlify.app/?numerator=1&denominator=5',
+    'https://fill-the-fraction.netlify.app/?numerator=2&denominator=5',
+    'https://fill-the-fraction.netlify.app/?numerator=3&denominator=8',
+    'https://fill-the-fraction.netlify.app/?numerator=6&denominator=12'
+  ]
 }
-else {
-  vuePersistentComponent(Editor)
-}
+vuePersistentComponent(Wrapper, props)
